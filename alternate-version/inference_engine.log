@@ -4,3 +4,519 @@
 2024-11-04 16:13:24,765 - algorithms.bc - INFO - Starting Backward Chaining for query: d
 2024-11-04 16:13:24,766 - algorithms.bc - INFO - Query is entailed
 2024-11-04 16:13:24,767 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:03:47,002 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:03:47,003 - __main__ - ERROR - Error during execution: name 'InputParserError' is not defined
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 82, in parse_file
+    literals, operator = InputParser.parse_logical_expression(clause_str)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 24, in parse_logical_expression
+    return [Literal(p.strip()) for p in parts], '=>'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 24, in <listcomp>
+    return [Literal(p.strip()) for p in parts], '=>'
+            ^^^^^^^^^^^^^^^^^^
+  File "<string>", line 6, in __init__
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 37, in __post_init__
+    raise InvalidLiteralError(
+data.knowledge_base.InvalidLiteralError: Invalid literal name 'p || r'. Only alphanumeric characters and underscores are allowed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 92, in parse_file
+    raise InputParserError(
+          ^^^^^^^^^^^^^^^^
+NameError: name 'InputParserError' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 109, in parse_file
+    raise InputParserError(f"Error parsing input: {str(e)}")
+          ^^^^^^^^^^^^^^^^
+NameError: name 'InputParserError' is not defined
+2024-11-13 20:06:17,889 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:06:17,891 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:06:17,891 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:06:17,891 - algorithms.tt - INFO - Starting Truth Table entailment check for query: i
+2024-11-13 20:06:17,892 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:06:17,892 - __main__ - ERROR - Error during execution: 'Clause' object has no attribute 'premises'
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 51, in main
+    result, models = tt.check_entailment(kb, query)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/tt.py", line 53, in check_entailment
+    if self._evaluate_kb(kb, model):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/tt.py", line 70, in _evaluate_kb
+    if not self._evaluate_clause(clause, model):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/tt.py", line 82, in _evaluate_clause
+    if not clause.premises:  # It's a fact
+           ^^^^^^^^^^^^^^^
+AttributeError: 'Clause' object has no attribute 'premises'
+2024-11-13 20:07:36,068 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:07:36,070 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:07:36,070 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:07:36,070 - algorithms.tt - INFO - Starting Truth Table entailment check for query: i
+2024-11-13 20:07:36,070 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:07:36,071 - __main__ - ERROR - Error during execution: 'KnowledgeBase' object has no attribute 'parse_expression'
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 51, in main
+    result, models = tt.check_entailment(kb, query)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/tt.py", line 47, in check_entailment
+    kb.parse_expression(query)
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'KnowledgeBase' object has no attribute 'parse_expression'
+2024-11-13 20:07:51,204 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:07:51,206 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:07:51,206 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:07:51,206 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:07:51,206 - algorithms.fc - ERROR - Cannot perform forward chaining: Error converting clause p || r => i: Cannot extract premises from expression
+2024-11-13 20:07:51,207 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:08:00,604 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:08:00,605 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:08:00,606 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:08:00,606 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:08:00,606 - algorithms.fc - ERROR - Cannot perform forward chaining: Error converting clause p || r => i: Cannot extract premises from expression
+2024-11-13 20:08:00,607 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:09:19,800 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:09:19,802 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:09:19,802 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:09:19,802 - algorithms.tt - INFO - Starting Truth Table entailment check for query: p
+2024-11-13 20:09:19,802 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:09:19,803 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/8 models
+2024-11-13 20:09:19,803 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:09:25,682 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:09:25,683 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:09:25,683 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:09:25,683 - algorithms.tt - INFO - Starting Truth Table entailment check for query: i
+2024-11-13 20:09:25,683 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:09:25,684 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/8 models
+2024-11-13 20:09:25,684 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:09:29,619 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:09:29,621 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:09:29,621 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:09:29,622 - algorithms.tt - INFO - Starting Truth Table entailment check for query: r
+2024-11-13 20:09:29,622 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:09:29,623 - algorithms.tt - INFO - Found counterexample model where KB is true but query is false: {'p': True, 'i': True, 'r': False}
+2024-11-13 20:09:29,623 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:10:31,957 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:10:31,958 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:10:36,183 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:10:36,184 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:11:07,741 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:07,743 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:11:10,932 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:10,933 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:11:16,316 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:16,317 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:11:30,787 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:30,788 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:11:30,788 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:11:30,789 - algorithms.tt - INFO - Starting Truth Table entailment check for query: r
+2024-11-13 20:11:30,789 - algorithms.tt - INFO - Checking 2 possible models
+2024-11-13 20:11:30,789 - algorithms.tt - INFO - Found counterexample model where KB is true but query is false: {'r': False}
+2024-11-13 20:11:30,790 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:11:44,634 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:44,635 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:11:44,635 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:11:44,636 - algorithms.tt - INFO - Starting Truth Table entailment check for query: r
+2024-11-13 20:11:44,636 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:11:44,636 - algorithms.tt - INFO - Found counterexample model where KB is true but query is false: {'p': True, 'r': False, 'i': True}
+2024-11-13 20:11:44,637 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:11:56,674 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:11:56,675 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:11:56,675 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:11:56,676 - algorithms.tt - INFO - Starting Truth Table entailment check for query: i
+2024-11-13 20:11:56,676 - algorithms.tt - INFO - Checking 8 possible models
+2024-11-13 20:11:56,677 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/8 models
+2024-11-13 20:11:56,677 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:12:33,475 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:12:33,476 - __main__ - ERROR - Error during execution: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 149, in parse_file
+    kb.add_clause(Clause(parsed_expr))
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/knowledge_base.py", line 139, in add_clause
+    raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
+data.knowledge_base.InvalidClauseError: Only Horn clauses are allowed in this knowledge base
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 44, in main
+    kb, query = InputParser.parse_file(filename)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/data/input_parser.py", line 170, in parse_file
+    raise KnowledgeBaseError(f"Knowledge base error: {str(e)}")
+data.knowledge_base.KnowledgeBaseError: Knowledge base error: Only Horn clauses are allowed in this knowledge base
+2024-11-13 20:13:46,157 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:13:46,158 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:13:46,158 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:13:46,159 - algorithms.tt - INFO - Starting Truth Table entailment check for query: s
+2024-11-13 20:13:46,159 - algorithms.tt - INFO - Checking 16 possible models
+2024-11-13 20:13:46,160 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/16 models
+2024-11-13 20:13:46,160 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:13:58,413 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:13:58,414 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:13:58,414 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:13:58,415 - algorithms.tt - INFO - Starting Truth Table entailment check for query: s
+2024-11-13 20:13:58,415 - algorithms.tt - INFO - Checking 16 possible models
+2024-11-13 20:13:58,415 - algorithms.tt - INFO - Found counterexample model where KB is true but query is false: {'s': False, 'r': False, 'i': False, 'p': False}
+2024-11-13 20:13:58,415 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:15:27,457 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:15:27,458 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:15:27,458 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:15:27,458 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:15:27,459 - __main__ - ERROR - Error during execution: name 'get_literals' is not defined
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 57, in main
+    result, inferred = fc.check_entailment(kb, query)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 141, in check_entailment
+    premises = get_literals(clause.expression.operands[0])
+               ^^^^^^^^^^^^
+NameError: name 'get_literals' is not defined
+2024-11-13 20:16:56,814 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:16:56,815 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:16:56,816 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:16:56,816 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:16:56,816 - __main__ - ERROR - Error during execution: name 'get_literals' is not defined
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 57, in main
+    result, inferred = fc.check_entailment(kb, query)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 132, in check_entailment
+    horn_clauses.extend(self.convert_to_horn_clauses(clause))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 102, in convert_to_horn_clauses
+    pairs = convert_expression(clause.expression)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 59, in convert_expression
+    premises = get_literals(antecedent)
+               ^^^^^^^^^^^^
+NameError: name 'get_literals' is not defined
+2024-11-13 20:17:06,131 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:17:06,132 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:17:06,132 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:17:06,133 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:17:06,133 - __main__ - ERROR - Error during execution: name 'get_literals' is not defined
+Traceback (most recent call last):
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/main.py", line 57, in main
+    result, inferred = fc.check_entailment(kb, query)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 132, in check_entailment
+    horn_clauses.extend(self.convert_to_horn_clauses(clause))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 102, in convert_to_horn_clauses
+    pairs = convert_expression(clause.expression)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/handler-one/code/assignments/inference_engine/alternate-version/algorithms/fc.py", line 59, in convert_expression
+    premises = get_literals(antecedent)
+               ^^^^^^^^^^^^
+NameError: name 'get_literals' is not defined
+2024-11-13 20:18:57,021 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:18:57,024 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:18:57,024 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:18:57,024 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:18:57,024 - algorithms.fc - WARNING - Skipping non-Horn clause: ~r - Negation must be part of implication or disjunction
+2024-11-13 20:18:57,025 - algorithms.fc - WARNING - Skipping non-Horn clause: ~i - Negation must be part of implication or disjunction
+2024-11-13 20:18:57,025 - algorithms.fc - INFO - Beginning forward chaining process
+2024-11-13 20:18:57,025 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:18:57,026 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:19:04,954 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:19:04,955 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:19:04,956 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:19:04,956 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:19:04,956 - algorithms.fc - WARNING - Skipping non-Horn clause: ~r - Negation must be part of implication or disjunction
+2024-11-13 20:19:04,957 - algorithms.fc - INFO - Beginning forward chaining process
+2024-11-13 20:19:04,957 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:19:04,957 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:19:04,958 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:19:13,925 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:19:13,926 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:19:13,926 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:19:13,926 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:19:13,926 - algorithms.fc - WARNING - Skipping non-Horn clause: ~r - Negation must be part of implication or disjunction
+2024-11-13 20:19:13,927 - algorithms.fc - INFO - Beginning forward chaining process
+2024-11-13 20:19:13,927 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:19:13,927 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:19:13,927 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:20:26,502 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:20:26,503 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:20:26,504 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:20:26,504 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:20:26,504 - algorithms.fc - WARNING - Skipping non-Horn clause: ~r - Negation must be part of implication or disjunction
+2024-11-13 20:20:26,504 - algorithms.fc - INFO - Beginning forward chaining process
+2024-11-13 20:20:26,505 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:20:26,505 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:20:26,505 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:20:45,909 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:20:45,910 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:20:45,910 - __main__ - INFO - Using Truth Table method
+2024-11-13 20:20:45,910 - algorithms.tt - INFO - Starting Truth Table entailment check for query: p
+2024-11-13 20:20:45,910 - algorithms.tt - INFO - Checking 16 possible models
+2024-11-13 20:20:45,911 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/16 models
+2024-11-13 20:20:45,911 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:21:57,186 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:21:57,187 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:21:57,187 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:21:57,188 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:21:57,188 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:21:57,188 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:21:57,189 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:21:57,189 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:12,827 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:12,828 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:22:12,828 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:12,828 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:22:12,829 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:22:12,829 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:22:12,829 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:22:12,830 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:23,860 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:23,860 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:22:23,861 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:23,861 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:22:23,861 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:22:23,861 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:22:23,862 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:22:23,862 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:27,922 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:27,924 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:22:27,924 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:27,924 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:22:27,925 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:22:27,925 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:33,234 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:33,235 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:22:33,235 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:33,235 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:22:33,235 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:22:33,235 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:38,079 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:38,080 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:22:38,080 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:38,080 - algorithms.fc - INFO - Starting Forward Chaining for query: r
+2024-11-13 20:22:38,081 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:22:38,081 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:47,261 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:47,262 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:22:47,263 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:47,263 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:22:47,263 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:22:47,264 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:22:52,189 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:22:52,190 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:22:52,190 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:22:52,191 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:22:52,191 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:22:52,191 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:23:01,241 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:23:01,243 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:23:01,243 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:23:01,243 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:23:01,243 - algorithms.fc - WARNING - Skipping non-Horn clause: ~r - Negation must be part of implication or disjunction
+2024-11-13 20:23:01,244 - algorithms.fc - WARNING - Skipping non-Horn clause: ~i - Negation must be part of implication or disjunction
+2024-11-13 20:23:01,244 - algorithms.fc - INFO - Beginning forward chaining process
+2024-11-13 20:23:01,244 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:23:01,245 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:24:38,537 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:24:38,539 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:24:38,540 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:24:38,540 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:24:38,540 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:24:38,540 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:24:55,958 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:24:55,958 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:24:55,959 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:24:55,959 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:24:55,959 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:24:55,960 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:24:55,960 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:24:55,961 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:25:00,957 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:25:00,959 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:25:00,959 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:25:00,960 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:25:00,960 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:25:00,960 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:25:00,961 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:25:00,961 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:04,435 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:04,436 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:26:04,436 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:04,437 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:26:04,437 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:26:04,437 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:26:04,437 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:26:04,438 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:12,447 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:12,448 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:26:12,449 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:12,449 - algorithms.fc - INFO - Starting Forward Chaining for query: p
+2024-11-13 20:26:12,450 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:26:12,450 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:26:12,450 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:26:12,451 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:16,081 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:16,082 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:26:16,082 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:16,083 - algorithms.fc - INFO - Starting Forward Chaining for query: r
+2024-11-13 20:26:16,083 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:26:16,083 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:26:16,084 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:26:16,084 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:21,421 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:21,422 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:26:21,422 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:21,423 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:26:21,423 - algorithms.fc - INFO - New fact derived: s
+2024-11-13 20:26:21,424 - algorithms.fc - INFO - New fact derived: p
+2024-11-13 20:26:21,424 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:26:21,424 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:25,598 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:25,599 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:26:25,599 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:25,599 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:26:25,599 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:26:25,600 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:33,540 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:33,541 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:26:33,541 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:33,541 - algorithms.fc - INFO - Starting Forward Chaining for query: i
+2024-11-13 20:26:33,542 - algorithms.fc - INFO - Query is not entailed
+2024-11-13 20:26:33,542 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:26:37,287 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:26:37,288 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:26:37,288 - __main__ - INFO - Using Forward Chaining method
+2024-11-13 20:26:37,288 - algorithms.fc - INFO - Starting Forward Chaining for query: s
+2024-11-13 20:26:37,290 - algorithms.fc - INFO - Query is entailed
+2024-11-13 20:26:37,291 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:15,406 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:15,408 - __main__ - INFO - Successfully parsed input file. Query: s
+2024-11-13 20:28:15,408 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:15,408 - algorithms.bc - INFO - Starting Backward Chaining for query: s
+2024-11-13 20:28:15,408 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:15,409 - algorithms.bc - INFO - Query is not entailed
+2024-11-13 20:28:15,409 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:24,108 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:24,109 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:28:24,110 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:24,110 - algorithms.bc - INFO - Starting Backward Chaining for query: p
+2024-11-13 20:28:24,111 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:24,111 - algorithms.bc - INFO - Query is not entailed
+2024-11-13 20:28:24,112 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:29,018 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:29,019 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:28:29,019 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:29,019 - algorithms.bc - INFO - Starting Backward Chaining for query: p
+2024-11-13 20:28:29,020 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:29,020 - algorithms.bc - INFO - Query is not entailed
+2024-11-13 20:28:29,020 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:35,877 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:35,879 - __main__ - INFO - Successfully parsed input file. Query: p
+2024-11-13 20:28:35,879 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:35,879 - algorithms.bc - INFO - Starting Backward Chaining for query: p
+2024-11-13 20:28:35,880 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:35,880 - algorithms.bc - INFO - Query is not entailed
+2024-11-13 20:28:35,881 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:39,546 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:39,548 - __main__ - INFO - Successfully parsed input file. Query: r
+2024-11-13 20:28:39,549 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:39,549 - algorithms.bc - INFO - Starting Backward Chaining for query: r
+2024-11-13 20:28:39,549 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:39,549 - algorithms.bc - INFO - Query is not entailed
+2024-11-13 20:28:39,550 - __main__ - INFO - Inference completed successfully
+2024-11-13 20:28:42,435 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-13 20:28:42,436 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-13 20:28:42,436 - __main__ - INFO - Using Backward Chaining method
+2024-11-13 20:28:42,436 - algorithms.bc - INFO - Starting Backward Chaining for query: i
+2024-11-13 20:28:42,436 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
+2024-11-13 20:28:42,437 - algorithms.bc - INFO - Query is entailed
+2024-11-13 20:28:42,437 - __main__ - INFO - Inference completed successfully

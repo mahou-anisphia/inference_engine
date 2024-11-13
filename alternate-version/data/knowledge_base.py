@@ -1,22 +1,27 @@
 # /data/knowledge_base.py
 from dataclasses import dataclass
-from typing import List, Set
+from typing import List, Set, Union
+from enum import Enum
 
+class LogicalOperator(Enum):
+    """Represents supported logical operators"""
+    AND = '&'       # Conjunction (∧)
+    OR = '||'       # Disjunction (∨)
+    IMPLIES = '=>'  # Implication (⇒)
+    BICON = '<=>'   # Biconditional (⇔)
+    NOT = '~'       # Negation (¬)
 
 class KnowledgeBaseError(Exception):
     """Base exception class for KnowledgeBase related errors"""
     pass
 
-
 class InvalidLiteralError(KnowledgeBaseError):
     """Raised when an invalid literal is provided"""
     pass
 
-
 class InvalidClauseError(KnowledgeBaseError):
     """Raised when an invalid clause is provided"""
     pass
-
 
 @dataclass
 class Literal:
@@ -42,77 +47,105 @@ class Literal:
     def __str__(self):
         return f"{'~' if self.negative else ''}{self.name}"
 
+    def negate(self):
+        """Returns a new literal with opposite polarity"""
+        return Literal(self.name, not self.negative)
+
+@dataclass
+class Expression:
+    """
+    Represents a logical expression that can contain multiple literals and operators
+
+    Attributes:
+        operator (LogicalOperator): The main logical operator of this expression
+        operands (List[Union[Literal, 'Expression']]): The operands (can be literals or nested expressions)
+    """
+    operator: LogicalOperator
+    operands: List[Union[Literal, 'Expression']]
+
+    def __str__(self):
+        if self.operator == LogicalOperator.NOT:
+            return f"~{self.operands[0]}"
+        return f" {self.operator.value} ".join(str(op) for op in self.operands)
 
 @dataclass
 class Clause:
     """
-    Represents a Horn clause in the knowledge base
-
-    A Horn clause is either:
-    1. A fact (empty premises, just a conclusion)
-    2. An implication (premises => conclusion)
+    Represents a general logical clause that can contain complex expressions
 
     Attributes:
-        premises (List[Literal]): List of literals in the antecedent
-        conclusion (Literal): The consequent literal
+        expression (Union[Literal, Expression]): The logical expression
     """
-    premises: List[Literal]
-    conclusion: Literal
+    expression: Union[Literal, Expression]
 
-    def __post_init__(self):
-        if not isinstance(self.premises, list):
-            raise InvalidClauseError("Premises must be a list")
-        if not isinstance(self.conclusion, Literal):
-            raise InvalidClauseError("Conclusion must be a Literal")
-        if any(not isinstance(p, Literal) for p in self.premises):
-            raise InvalidClauseError("All premises must be Literals")
+    def is_horn(self) -> bool:
+        """Checks if this is a Horn clause"""
+        def count_positive_literals(expr) -> int:
+            if isinstance(expr, Literal):
+                return 0 if expr.negative else 1
+            if isinstance(expr, Expression):
+                if expr.operator == LogicalOperator.IMPLIES:
+                    # For implications, only count positives in conclusion
+                    return count_positive_literals(expr.operands[-1])
+                return sum(count_positive_literals(op) for op in expr.operands)
+            return 0
+
+        return count_positive_literals(self.expression) <= 1
+
+    def get_symbols(self) -> Set[str]:
+        """Returns all symbols used in this clause"""
+        symbols = set()
+
+        def collect_symbols(expr):
+            if isinstance(expr, Literal):
+                symbols.add(expr.name)
+            elif isinstance(expr, Expression):
+                for op in expr.operands:
+                    collect_symbols(op)
+
+        collect_symbols(self.expression)
+        return symbols
 
     def __str__(self):
-        if not self.premises:  # It's a fact
-            return str(self.conclusion)
-        return f"{' & '.join(str(p) for p in self.premises)} => {self.conclusion}"
-
+        return str(self.expression)
 
 class KnowledgeBase:
     """
-    Stores and manages the knowledge base containing Horn clauses
+    Stores and manages the knowledge base containing logical clauses
 
     Attributes:
         clauses (List[Clause]): List of all clauses in the knowledge base
-        facts (Set[str]): Set of known facts (clauses with no premises)
-        symbols (Set[str]): Set of all unique symbols used in the knowledge base
+        facts (Set[str]): Set of known facts (atomic propositions)
+        symbols (Set[str]): Set of all unique symbols used
+        horn_only (bool): Whether to restrict to Horn clauses only
     """
-
-    def __init__(self):
+    def __init__(self, horn_only: bool = False):
         self.clauses: List[Clause] = []
         self.facts: Set[str] = set()
         self.symbols: Set[str] = set()
+        self.horn_only = horn_only
 
     def add_clause(self, clause: Clause) -> None:
         """
-        Adds a new clause to the knowledge base and updates facts and symbols sets
+        Adds a new clause to the knowledge base
 
         Args:
             clause (Clause): The clause to add
 
         Raises:
-            InvalidClauseError: If the clause is invalid or contains invalid symbols
+            InvalidClauseError: If the clause is invalid or violates Horn restriction
         """
-        try:
-            if not isinstance(clause, Clause):
-                raise InvalidClauseError("Must provide a valid Clause object")
+        if self.horn_only and not clause.is_horn():
+            raise InvalidClauseError("Only Horn clauses are allowed in this knowledge base")
 
-            self.clauses.append(clause)
-            self.symbols.add(clause.conclusion.name)
+        # Extract atomic facts (single positive literals)
+        if isinstance(clause.expression, Literal) and not clause.expression.negative:
+            self.facts.add(clause.expression.name)
 
-            if not clause.premises:  # If it's a fact
-                if clause.conclusion.negative:
-                    raise InvalidClauseError(
-                        "Facts cannot be negative literals")
-                self.facts.add(clause.conclusion.name)
+        # Update symbols
+        self.symbols.update(clause.get_symbols())
 
-            for premise in clause.premises:
-                self.symbols.add(premise.name)
+        self.clauses.append(clause)
 
-        except Exception as e:
-            raise InvalidClauseError(f"Error adding clause: {str(e)}")
+    def __str__(self):
+        return "\n".join(str(clause) for clause in self.clauses)
