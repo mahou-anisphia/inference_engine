@@ -1,0 +1,4 @@
+TELL
+~r; i; i <=> s; r || i => p;
+ASK
+i

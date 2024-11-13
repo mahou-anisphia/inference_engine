@@ -1,29 +1,104 @@
 # /data/input_parser.py
 from pathlib import Path
-from data.knowledge_base import KnowledgeBase, Clause, Literal, KnowledgeBaseError
-
+import re
+from typing import Union, Tuple
+from data.knowledge_base import (
+    KnowledgeBase, Clause, Literal, Expression,
+    LogicalOperator, KnowledgeBaseError
+)
 
 class InputParserError(Exception):
     """Base exception class for InputParser related errors"""
     pass
 
-
 class FileFormatError(InputParserError):
     """Raised when the input file format is invalid"""
     pass
 
-
 class InputParser:
     """Handles parsing of input files into a knowledge base and query"""
 
+    # Operator precedence (higher number = higher precedence)
+    PRECEDENCE = {
+        LogicalOperator.BICON: 1,
+        LogicalOperator.IMPLIES: 2,
+        LogicalOperator.OR: 3,
+        LogicalOperator.AND: 4,
+        LogicalOperator.NOT: 5
+    }
+
     @staticmethod
-    def parse_file(filename: str) -> tuple[KnowledgeBase, str]:
+    def tokenize(expression: str) -> list:
+        """
+        Tokenizes a logical expression into components
+
+        Args:
+            expression (str): The logical expression to tokenize
+
+        Returns:
+            list: List of tokens (operators and operands)
+        """
+        # Define regex pattern for tokenization
+        pattern = r'(~|\(|\)|&|\|\||=>|<=>|[a-zA-Z_][a-zA-Z0-9_]*)'
+        tokens = re.findall(pattern, expression.strip())
+        return [t.strip() for t in tokens if t.strip()]
+
+    @classmethod
+    def parse_expression(cls, tokens: list) -> Union[Literal, Expression]:
+        """
+        Parses a list of tokens into a logical expression using precedence climbing
+
+        Args:
+            tokens (list): List of tokens to parse
+
+        Returns:
+            Union[Literal, Expression]: The parsed expression
+        """
+        def parse_primary():
+            token = tokens.pop(0)
+            if token == '(':
+                expr = parse_expression(0)
+                if not tokens or tokens.pop(0) != ')':
+                    raise InputParserError("Missing closing parenthesis")
+                return expr
+            elif token == '~':
+                operand = parse_primary()
+                return Expression(LogicalOperator.NOT, [operand])
+            else:
+                return Literal(token)
+
+        def parse_expression(min_precedence: int):
+            left = parse_primary()
+
+            while tokens and any(op.value == tokens[0] for op in LogicalOperator):
+                op_token = tokens[0]
+                op = next(op for op in LogicalOperator if op.value == op_token)
+
+                if cls.PRECEDENCE[op] < min_precedence:
+                    break
+
+                tokens.pop(0)  # consume operator
+
+                # Handle right associativity for implication and biconditional
+                next_precedence = cls.PRECEDENCE[op]
+                if op in (LogicalOperator.IMPLIES, LogicalOperator.BICON):
+                    next_precedence -= 1
+
+                right = parse_expression(next_precedence)
+                left = Expression(op, [left, right])
+
+            return left
+
+        return parse_expression(0)
+
+    @classmethod
+    def parse_file(cls, filename: str) -> tuple[KnowledgeBase, str]:
         """
         Parses an input file into a knowledge base and query
 
         Format:
         TELL
-        [Horn clauses separated by semicolons]
+        [logical expressions separated by semicolons]
         ASK
         [query]
 
@@ -32,12 +107,6 @@ class InputParser:
 
         Returns:
             tuple[KnowledgeBase, str]: The parsed knowledge base and query
-
-        Raises:
-            FileFormatError: If file format is invalid
-            FileNotFoundError: If file doesn't exist
-            InputParserError: For other parsing errors
-            KnowledgeBaseError: If knowledge base construction fails
         """
         try:
             file_path = Path(filename)
@@ -65,64 +134,33 @@ class InputParser:
                 tell_content = tell_section[4:].strip()
 
                 if tell_content:  # Only process if there's content
-                    clauses = tell_content.split(';')
+                    expressions = tell_content.split(';')
 
-                    for clause in clauses:
-                        clause = clause.strip()
-                        if not clause:
+                    for expr in expressions:
+                        expr = expr.strip()
+                        if not expr:
                             continue
 
-                        try:
-                            # Parse single fact
-                            if '=>' not in clause:
-                                if any(op in clause for op in ['&', '||', '<=>']):
-                                    raise FileFormatError(
-                                        f"Non-Horn clause detected: {clause}")
-                                kb.add_clause(
-                                    Clause([], Literal(clause.strip())))
-                                continue
+                        # Tokenize and parse the expression
+                        tokens = cls.tokenize(expr)
+                        parsed_expr = cls.parse_expression(tokens)
 
-                            # Parse implication
-                            parts = clause.split('=>')
-                            if len(parts) != 2:
-                                raise FileFormatError(
-                                    f"Invalid clause format: {clause}")
+                        # Add to knowledge base
+                        kb.add_clause(Clause(parsed_expr))
 
-                            premises_str, conclusion_str = parts[0].strip(
-                            ), parts[1].strip()
-
-                            # Parse premises
-                            premises = []
-                            if '&' in premises_str:
-                                premise_parts = premises_str.split('&')
-                                premises = [Literal(p.strip())
-                                            for p in premise_parts]
-                            else:
-                                premises = [Literal(premises_str)]
-
-                            # Parse conclusion
-                            conclusion = Literal(conclusion_str)
-
-                            kb.add_clause(Clause(premises, conclusion))
-
-                        except KnowledgeBaseError as e:
-                            raise InputParserError(
-                                f"Error in clause '{clause}': {str(e)}")
-
-                # Validate and parse ASK section
+                # Parse and validate query
                 query = ask_section.strip()
                 if not query:
                     raise FileFormatError("ASK section cannot be empty")
-                if any(op in query for op in ['&', '=>', '||', '<=>']):
-                    raise FileFormatError(
-                        f"Query must be a single proposition: {query}")
 
-                # Validate query is a symbol in the knowledge base
-                if query not in kb.symbols:
-                    raise InputParserError(
-                        f"Query symbol '{query}' not found in knowledge base")
+                # Parse query as expression
+                query_tokens = cls.tokenize(query)
+                query_expr = cls.parse_expression(query_tokens)
 
-                return kb, query
+                # Convert to string representation
+                query_str = str(query_expr)
+
+                return kb, query_str
 
         except FileNotFoundError as e:
             raise FileNotFoundError(f"Error reading file: {str(e)}")
