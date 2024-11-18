@@ -520,3 +520,42 @@ NameError: name 'get_literals' is not defined
 2024-11-13 20:28:42,436 - algorithms.bc - INFO - Converting knowledge base to Horn clauses
 2024-11-13 20:28:42,437 - algorithms.bc - INFO - Query is entailed
 2024-11-13 20:28:42,437 - __main__ - INFO - Inference completed successfully
+2024-11-18 15:02:31,034 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-18 15:02:31,036 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-18 15:02:31,036 - __main__ - INFO - Using Truth Table method
+2024-11-18 15:02:31,037 - algorithms.tt - INFO - Starting Truth Table entailment check for query: i
+2024-11-18 15:02:31,038 - algorithms.tt - INFO - Checking 16 possible models
+2024-11-18 15:02:31,039 - algorithms.tt - INFO - Query is entailed. KB satisfied in 1/16 models
+2024-11-18 15:02:31,040 - __main__ - INFO - Inference completed successfully
+2024-11-18 15:02:34,268 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-18 15:02:34,270 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-18 15:02:34,270 - __main__ - INFO - Using Backward Chaining method
+2024-11-18 15:02:34,270 - __main__ - ERROR - Error during execution: Clause i <=> s is not a Horn clause
+Traceback (most recent call last):
+  File "D:\Swinburne\7sem\work\introAI\inference_engine\alternate-version\main.py", line 76, in main
+    result, inferred = bc.check_entailment(kb, query)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Swinburne\7sem\work\introAI\inference_engine\alternate-version\algorithms\bc.py", line 119, in check_entailment
+    self._process_knowledge_base(kb)
+  File "D:\Swinburne\7sem\work\introAI\inference_engine\alternate-version\algorithms\bc.py", line 26, in _process_knowledge_base
+    raise InvalidClauseError(
+data.knowledge_base.InvalidClauseError: Clause i <=> s is not a Horn clause
+2024-11-18 15:02:37,568 - __main__ - INFO - Parsing input file: test1.txt
+2024-11-18 15:02:37,571 - __main__ - INFO - Successfully parsed input file. Query: i
+2024-11-18 15:02:37,571 - __main__ - INFO - Using Forward Chaining method
+2024-11-18 15:02:37,572 - __main__ - ERROR - Error during execution: Clause i <=> s is not a Horn clause
+Traceback (most recent call last):
+  File "D:\Swinburne\7sem\work\introAI\inference_engine\alternate-version\main.py", line 70, in main
+    result, inferred = fc.check_entailment(kb, query)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Swinburne\7sem\work\introAI\inference_engine\alternate-version\algorithms\fc.py", line 87, in check_entailment
+    raise InvalidClauseError(
+data.knowledge_base.InvalidClauseError: Clause i <=> s is not a Horn clause
+2024-11-18 15:02:47,672 - __main__ - INFO - Parsing input file: input.txt
+2024-11-18 15:02:47,682 - __main__ - INFO - Successfully parsed input file. Query: d
+2024-11-18 15:02:47,682 - __main__ - INFO - Using Forward Chaining method
+2024-11-18 15:02:47,683 - __main__ - INFO - Inference completed successfully
+2024-11-18 15:02:50,170 - __main__ - INFO - Parsing input file: input.txt
+2024-11-18 15:02:50,172 - __main__ - INFO - Successfully parsed input file. Query: d
+2024-11-18 15:02:50,172 - __main__ - INFO - Using Backward Chaining method
+2024-11-18 15:02:50,173 - __main__ - INFO - Inference completed successfully

@@ -5,6 +5,7 @@ from data.input_parser import InputParser
 from algorithms.tt import TruthTable
 from algorithms.fc import ForwardChaining
 from algorithms.bc import BackwardChaining
+from data.knowledge_base import KnowledgeBase, InvalidClauseError
 
 
 def setup_logging(level=logging.INFO):
@@ -39,10 +40,22 @@ def main():
     method = sys.argv[2].upper()
 
     try:
+        # Create knowledge base with appropriate settings
+        horn_only = method in ("FC", "BC")
+        kb = KnowledgeBase(horn_only=horn_only)
+
         # Parse input file
         logger.info(f"Parsing input file: {filename}")
-        kb, query = InputParser.parse_file(filename)
-        logger.info(f"Successfully parsed input file. Query: {query}")
+        try:
+            kb, query = InputParser.parse_file(filename)
+            logger.info(f"Successfully parsed input file. Query: {query}")
+        except InvalidClauseError as e:
+            if horn_only:
+                logger.error("Non-Horn clauses detected in input file")
+                print(
+                    "Error: Forward Chaining and Backward Chaining methods require Horn clauses only.")
+                sys.exit(1)
+            raise
 
         # Run requested inference method
         if method == "TT":
