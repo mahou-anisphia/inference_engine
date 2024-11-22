@@ -1,0 +1,23 @@
+classDiagram
+    %% Core classes
+    class KnowledgeBase
+    class Clause
+    class Literal
+
+    %% Utility class
+    class InputParser
+
+    %% Inference algorithm classes
+    class TruthTable
+    class ForwardChaining
+    class BackwardChaining
+
+    %% Relationships with nice spacing
+    KnowledgeBase *-- Clause : contains
+    Clause *-- Literal : has
+
+    InputParser ..> KnowledgeBase : creates
+
+    TruthTable ..> KnowledgeBase : uses
+    ForwardChaining ..> KnowledgeBase : uses
+    BackwardChaining ..> KnowledgeBase : uses
